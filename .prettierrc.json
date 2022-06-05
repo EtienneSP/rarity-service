@@ -1,0 +1,7 @@
+{
+  "bracketSpacing": false,
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "quoteProps": "consistent",
+  "printWidth": 120
+}
