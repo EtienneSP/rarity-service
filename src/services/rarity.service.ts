@@ -72,6 +72,7 @@ const generatePolicyRarityFromTemplate = (
 
   for (const data of assetData) {
     const metadata = data.onchain_metadata;
+    if (metadata == null) continue;
 
     for (const [key, path] of Object.entries(attributeKeyAndPath)) {
       const value = extractKeyValue(metadata, path);
@@ -99,6 +100,7 @@ const generateAssetRarityAndScore = async (
   const assetCount = blockfrostAssets.length;
 
   for (const asset of blockfrostAssets) {
+    if (asset.onchain_metadata == null) continue;
     const rarity = generateAssetRarity(asset, rarityMap, assetCount, attributeKeyAndPath);
     assetRarity.push({asset, rarity});
   }
@@ -107,6 +109,8 @@ const generateAssetRarityAndScore = async (
   let rank = 1;
 
   for (const {asset, rarity} of assetRarity) {
+    if (asset.onchain_metadata == null) continue;
+
     rarity["rank"] = rank;
     rank++;
 
@@ -125,10 +129,12 @@ const generateAssetRarityAndScore = async (
 };
 
 const getAssetName = (asset: BlockfrostAssetType) => {
+  if (!Object.prototype.hasOwnProperty.call(asset, "name")) return "empty";
   return asset.onchain_metadata.name;
 };
 
 const getAssetImage = (asset: BlockfrostAssetType) => {
+  if (!Object.prototype.hasOwnProperty.call(asset, "image")) return "empty";
   return asset.onchain_metadata.image;
 };
 
@@ -187,6 +193,8 @@ const persistRarityData = async (
 };
 
 const extractKeyValue = (metadata: {[key: string]: any}, key: string) => {
+  if (metadata == null) return;
+
   if (!key.includes(".")) return metadata[key];
 
   const splittedKey = key.split(".");
