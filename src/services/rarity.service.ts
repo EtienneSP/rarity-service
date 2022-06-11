@@ -129,12 +129,12 @@ const generateAssetRarityAndScore = async (
 };
 
 const getAssetName = (asset: BlockfrostAssetType) => {
-  if (!Object.prototype.hasOwnProperty.call(asset, "name")) return "empty";
+  if (!Object.prototype.hasOwnProperty.call(asset.onchain_metadata, "name")) return "empty";
   return asset.onchain_metadata.name;
 };
 
 const getAssetImage = (asset: BlockfrostAssetType) => {
-  if (!Object.prototype.hasOwnProperty.call(asset, "image")) return "empty";
+  if (!Object.prototype.hasOwnProperty.call(asset.onchain_metadata, "image")) return "empty";
   return asset.onchain_metadata.image;
 };
 
